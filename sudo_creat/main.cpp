@@ -1,126 +1,166 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
-int resurch(int sudoku[9])
-{
-	return 0;
-}
+void hang_methon(int sudoku[9][9]);
+void print_sudoku(int sudoku[9][9]);
+void lie_methon(int sudoku[9][9]);
+
+
 int main()
 {
-	int sudoku[9][9];
+	int i=0, number,way[5];
 	int temp[10], temp2[10], num_out[10];
-	int i = 0, count = 0, a, j = 1, m;
-	for (i = 0; i < 10; i++)
+	int sudoku[9][9] = { { 5, 4, 6, 3, 9, 2, 8, 7, 1 },
+	{ 3, 2, 8, 5, 7, 1, 9, 4, 6 },
+	{ 9, 1, 7, 8, 6, 4, 2, 3, 5 },
+	{ 7, 8, 2, 6, 1, 3, 5, 9, 4 },
+	{ 1, 6, 5, 2, 4, 9, 3, 8, 7 },
+	{ 4, 9, 3, 7, 5, 8, 1, 6, 2 },
+	{ 6, 5, 9, 1, 3, 7, 4, 2, 8 },
+	{ 8, 3, 1, 4, 2, 6, 7, 5, 9 },
+	{ 2, 7, 4, 9, 8, 5, 6, 1, 3 } };
+	int in_time;
+	srand((unsigned)time(NULL)); //用时间做种，每次产生随机数不一样
+	
+	number = rand() % 4; //产生0-3的随机数
+	while (i < 9)
 	{
-		temp[i] = 0;
+		lie_methon(sudoku);
+		i++;
 	}
-	temp2[0] = 5;
-	while (count != 10)
+
+}
+void hang_methon(int sudoku[9][9])
+{
+	int i, j;
+	int temp[9], temp2[9], number = 0, number2 = 0;
+	while (number == 0) {
+		number = rand() % 9;
+		number2 = number;
+	}
+	if (number <= 2)
 	{
-		a = rand() % 10;
-		if (temp[a] == 0)
+		if (number == 2)
 		{
-			temp[a] = 1;
-			count++;
-			if (a != 0 && a != 5)
+			for (i = 0; i < 9; i++)
 			{
-				temp2[j] = a;
-				j++;
+				temp[i] = sudoku[2][i];
+				sudoku[2][i] = sudoku[1][i];
+				sudoku[1][i] = temp[i];
+			}
+		}
+		if (number == 1)
+		{
+			for (i = 0; i < 9; i++)
+			{
+				temp[i] = sudoku[2][i];
+				sudoku[2][i] = sudoku[1][i];
+				sudoku[1][i] = temp[i];
 			}
 		}
 	}
-	for (i = 0; i < 9; i++)
-		sudoku[i][0] = temp2[i];
-	for (i = 1; i < 9; i++)
-	{
-		m = 0, j = 0, count = 0;
-		for (m = 0; m < 10; m++)
+		else if (number <= 5)
 		{
-			temp[m] = 0;
-		}
-		while (count != 10)
-		{
-			a = rand() % 10;
-			if (temp[a] == 0)
+			while (number2 == number)
 			{
-				temp[a] = 1;
-				count++;
-				if (a != 0)
-				{
-					sudoku[j][i] = a;
-					j++;
-				}
+				number2 = rand() % 3 + 3;
 			}
-		}
-	}
-	int t = 0;
-	for (i = 0; i < 9; i++)
-	{
-		for (m = 0; m < 10; m++)
-		{
-			temp[m] = 0;
-			temp2[m] = 0;
-		}
-		m = 0;
-		for (j = 0; j < 9; j++)
-		{
-			temp[sudoku[i][j]]++;
-
-			temp2[sudoku[i][j]] = j + temp2[sudoku[i][j]] * 10;
-			if (temp[sudoku[i][j]]>1)
+			for (i = 0; i < 9; i++)
 			{
-				num_out[m] = sudoku[i][j];//记录多出的数字
-			}
-		}
-		m = 0;
-		for (t = 1; t < 10; t++)
-		{
-			int tt1;
-			int t2 = 0, t3 = 0;
-
-			if (temp[t] == 0)//发现行缺少的数字t//从重复的数字的列中寻找列中缺少数字的位置
-			{
-				tt1 = temp2[num_out[t2]] % 10;
-				int flag = 0; int plus = 10;
-				while (flag == 0)
-				{
-
-					for (t3 = i + 1; t3 < 9; t3++)
-					{
-						if (sudoku[t3][tt1] == t)//
-						{
-							int temps = sudoku[t3][tt1];
-							sudoku[t3][tt1] = sudoku[i][tt1];
-							sudoku[i][tt1] = temps;
-
-							temp2[num_out[t2]] = temp2[num_out[t2]] - tt1*(plus / 10);
-							flag = 1;
-							temp[num_out[t2]]--;
-							t2++;
-							temp[t] = 1;
-							break;
-						}
-					}
-					if (flag == 0)
-					{
-
-						plus = plus * 10;
-						tt1 = (temp2[num_out[t2]] % plus) / (plus / 10);
-					}
-				}
+				temp[i] = sudoku[number2][i];
+				sudoku[number2][i] = sudoku[number][i];
+				sudoku[number][i] = temp[i];
 			}
 
 		}
-		for (int kk = 0; kk<9; kk++)
+		else
 		{
-			for (int jj = 0; jj<9; jj++)
-				printf("%2d ", sudoku[kk][jj]);
-			printf("\n");
+			while (number2 == number)
+			{
+				number2 = rand() % 3 + 6;
+			}
+			for (i = 0; i < 9; i++)
+			{
+				temp[i] = sudoku[number2][i];
+				sudoku[number2][i] = sudoku[number][i];
+				sudoku[number][i] = temp[i];
+			}
 		}
+		print_sudoku(sudoku);
 		printf("\n");
-
+}
+void lie_methon(int sudoku[9][9])
+{
+	int i, j;
+	int temp[9], temp2[9], number = 0, number2 = 0;
+	while (number == 0) {
+		number = rand() % 9;
+		number2 = number;
+	}
+	printf("%d\n", number);
+	if (number <= 2)
+	{
+		if (number == 2)
+		{
+			for (i = 0; i < 9; i++)
+			{
+				temp[i] = sudoku[i][2];
+				sudoku[i][2] = sudoku[i][1];
+				sudoku[i][1] = temp[i];
+			}
+		}
+		if (number == 1)
+		{
+			for (i = 0; i < 9; i++)
+			{
+				temp[i] = sudoku[i][2];
+				sudoku[i][2] = sudoku[i][1];
+				sudoku[i][1] = temp[i];
+			}
+		}
+	}
+	else if (number <= 5)
+	{
+		while (number2 == number)
+		{
+			number2 = rand() % 3 + 3;
+		}
+		for (i = 0; i < 9; i++)
+		{
+			temp[i] = sudoku[i][number2];
+			sudoku[i][number2] = sudoku[i][number];
+			sudoku[i][number] = temp[i];
+		}
 
 	}
+	else
+	{
+		while (number2 == number)
+		{
+			number2 = rand() % 3 + 6;
+		}
+		for (i = 0; i < 9; i++)
+		{
+			temp[i] = sudoku[i][number2];
+			sudoku[i][number2] = sudoku[i][number];
+			sudoku[i][number] = temp[i];
+		}
+	}
+	print_sudoku(sudoku);
+	printf("\n");
 
+}
+
+void print_sudoku(int sudoku[9][9])
+{
+	//打印数独
+	int i, j;
+	for (i = 0; i<9; i++)
+	{
+		for (j = 0; j<9; j++)
+			printf("%2d ", sudoku[i][j]);
+		printf("\n");
+	}
 }
