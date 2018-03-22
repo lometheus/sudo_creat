@@ -6,6 +6,7 @@
 void hang_methon(int sudoku[9][9]);
 void print_sudoku(int sudoku[9][9]);
 void lie_methon(int sudoku[9][9]);
+void num_methon(int sudoku[9][9]);
 
 
 int main()
@@ -23,12 +24,20 @@ int main()
 	{ 2, 7, 4, 9, 8, 5, 6, 1, 3 } };
 	int in_time;
 	srand((unsigned)time(NULL)); //用时间做种，每次产生随机数不一样
-	
+	scanf_s("%d", &in_time);
 	number = rand() % 4; //产生0-3的随机数
-	while (i < 9)
+	while (in_time--) 
 	{
-		lie_methon(sudoku);
-		i++;
+		i = 0;
+		while (i < 3)
+		{
+			hang_methon(sudoku);
+			num_methon(sudoku);
+			lie_methon(sudoku);
+			i++;
+		}
+		print_sudoku(sudoku);
+		printf("\n");
 	}
 
 }
@@ -88,8 +97,7 @@ void hang_methon(int sudoku[9][9])
 				sudoku[number][i] = temp[i];
 			}
 		}
-		print_sudoku(sudoku);
-		printf("\n");
+
 }
 void lie_methon(int sudoku[9][9])
 {
@@ -99,7 +107,6 @@ void lie_methon(int sudoku[9][9])
 		number = rand() % 9;
 		number2 = number;
 	}
-	printf("%d\n", number);
 	if (number <= 2)
 	{
 		if (number == 2)
@@ -148,10 +155,37 @@ void lie_methon(int sudoku[9][9])
 			sudoku[i][number] = temp[i];
 		}
 	}
-	print_sudoku(sudoku);
-	printf("\n");
 
 }
+
+void num_methon(int sudoku[9][9])
+{
+	int i,j,number = 0,number2=0,temp1,temp2,temp3;
+	while (number == 0||number==5)
+	{
+		number = rand() % 10;
+		number2 = number;
+	}
+	while (number2 == 0|| number2 == number || number2 == 5)
+	{
+		number2 = rand() % 10;
+	}
+	for (i = 0; i < 9; i++)
+	{
+		for (j = 0; j < 9; j++)
+		{
+			if (number == sudoku[i][j])
+				temp1 = j;
+			if (number2 == sudoku[i][j])
+				temp2 = j;
+		}
+		temp3 = sudoku[i][temp1];
+		sudoku[i][temp1] = sudoku[i][temp2];
+		sudoku[i][temp2] = temp3;
+	}
+
+}
+
 
 void print_sudoku(int sudoku[9][9])
 {
