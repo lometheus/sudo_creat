@@ -1,16 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<iostream>
+#include<fstream>
 #include <math.h>
 #include <time.h>
+using namespace std;
 
 void hang_methon(int sudoku[9][9]);
 void print_sudoku(int sudoku[9][9]);
 void lie_methon(int sudoku[9][9]);
 void num_methon(int sudoku[9][9]);
-
+ofstream outf;
+void save(int a[9][9])
+{
+	char space = 32;
+	
+	
+	for (int i = 0; i<9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			//s[i][j] = a[i][j];
+			outf << a[i][j];
+			if (j<8)
+				outf << space;
+		}
+		outf << '\n';
+		//outf.write(s[i], strlen(s[i]));
+	}
+	outf << '\n';
+	
+}
 
 int main()
 {
+	outf.open("suduku.txt");
 	int i=0, number,way[5];
 	int temp[10], temp2[10], num_out[10];
 	int sudoku[9][9] = { { 5, 4, 6, 3, 9, 2, 8, 7, 1 },
@@ -25,25 +49,37 @@ int main()
 	int in_time;
 	srand((unsigned)time(NULL)); //用时间做种，每次产生随机数不一样
 	scanf_s("%d", &in_time);
-	number = rand() % 4; //产生0-3的随机数
+	clock_t startTime, endTime;
+	startTime = clock();
 	while (in_time--) 
 	{
 		i = 0;
-		while (i < 3)
+		number = 0;
+		while (number==0)
 		{
-			hang_methon(sudoku);
+			number = rand() % 10; //产生1-9的随机数
+		}
+		
+		while (i <= number)
+		{
+			//hang_methon(sudoku);
 			num_methon(sudoku);
-			lie_methon(sudoku);
+			//lie_methon(sudoku);
 			i++;
 		}
-		print_sudoku(sudoku);
-		printf("\n");
+		//print_sudoku(sudoku);
+		save(sudoku);
 	}
-
+	outf.close();
+	endTime = clock();
+	cout << "Totle Time : " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+	system("pause");
+	return 0;
 }
 void hang_methon(int sudoku[9][9])
 {
 	int i, j;
+
 	int temp[9], temp2[9], number = 0, number2 = 0;
 	while (number == 0) {
 		number = rand() % 9;

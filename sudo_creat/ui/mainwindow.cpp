@@ -27,7 +27,7 @@ void MainWindow::paintEvent( QPaintEvent* )
           painter.drawRect(20, 260, 120, 120);
           painter.drawRect(140, 140, 120, 120);
          painter.drawRect(260, 260, 120, 120);
-     painter.setBrush(QColor(255, 106, 106));
+     painter.setBrush(QColor(255, 106, 106));//画一个红色方框
              painter.drawRect(20, 20, 40, 40);
       paint->setPen(QPen(Qt::black,2,Qt::SolidLine));//钢笔工具：颜色，线号，实线
       //画SIZE+1条横线
