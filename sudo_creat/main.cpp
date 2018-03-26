@@ -4,6 +4,7 @@
 #include<fstream>
 #include <math.h>
 #include <time.h>
+#include"function.h"
 using namespace std;
 
 void hang_methon(int sudoku[9][9]);
