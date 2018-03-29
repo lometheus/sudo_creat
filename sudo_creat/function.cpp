@@ -96,7 +96,6 @@ int creat(int in_time)
 	outf.close();
 	endTime = clock();
 	cout << "Totle Time : " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
-	system("pause");
 	return 0;
 }
 int  general_inspection(int sudoku[9][9])
