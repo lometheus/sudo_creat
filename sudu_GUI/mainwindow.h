@@ -4,7 +4,9 @@
 #include <QWidget>
 #include <QPainter>
 #include <QMainWindow>
-
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 namespace Ui {
 class MainWindow;
 }
@@ -15,16 +17,17 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-
-    ~MainWindow();
+    QPainter *paint;
     const int SIZE=9;
     const int WIDTH=40;
     const int x=20,y=20;
+    ~MainWindow();
+
 
 private:
     Ui::MainWindow *ui;
-      QPainter *paint;
-void MainWindow::paintEvent( QPaintEvent* ) ;
+
+    void paintEvent( QPaintEvent* ) ;
 };
 
 #endif // MAINWINDOW_H

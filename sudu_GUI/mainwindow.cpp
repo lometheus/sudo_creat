@@ -1,12 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QMessageBox>
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //userNameLineEdit=new QLineEdit;
+   // QGridLayout *mainLayout=new QGridLayout(this);
+    //mainLayout->addWidget(userNameLineEdit);
     ui->setupUi(this);
     //this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
     this->setWindowOpacity(0.9);
@@ -16,7 +22,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-void MainWindow::paintEvent( QPaintEvent* )
+void MainWindow::paintEvent( QPaintEvent *)
 {
     paint=new QPainter;
       paint->begin(this);//主窗口
