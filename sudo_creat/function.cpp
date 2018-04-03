@@ -5,7 +5,7 @@
 #include <math.h>
 #include <time.h>
 using namespace std;
-int sudo_re[1000005][9][9];
+char sudo_re[1000005][20][20];
 typedef struct node
 {
 	int col;
@@ -35,33 +35,50 @@ void save_q(int num)
 	
 	outfile.close();
 }
-void save(int a[9][9])
+void save(char a[20][20])
 {
 	char space = 32;
-	for (int i = 0; i<9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			//s[i][j] = a[i][j];
-			outf << a[i][j];
-			if (j<8)
-				outf << space;
-		}
-		outf << '\n';
-		//outf.write(s[i], strlen(s[i]));
-	}
+	//for (int i = 0; i<9; i++)
+	//{
+	//	for (int j = 0; j < 9; j++)
+	//	{
+	//		//s[i][j] = a[i][j];
+	//		outf << a[i][j];
+	//		if (j<8)
+	//			outf << space;
+	//	}
+		outf << a;
+	//	//outf.write(s[i], strlen(s[i]));
+	//}
 	outf << '\n';
 
 }
 void save_memory(int a[9][9], int tim)
 {
-	for (int i = 0; i < 9; i++)
+	int j, i,x,m=0;
+	char temp[400];
+	for (i = 0; i < 9; i++)
 	{
-		for (int j = 0; j < 9; j++)
+		for (j = 0; j < 9; j++)
 		{
-			sudo_re[tim][i][j] = a[i][j];
+			/*sudo_re[tim][i][j] = a[i][j/2]+48;
+			j++;
+			sudo_re[tim][i][j] = ' ';*/
+			temp[m]= a[i][j] + 48;
+			m++;
+			if (j != 8)
+			{
+				temp[m] = ' ';
+				m++;
+			}
 		}
+		temp[m] = '\n';
+		m++;
 	}
+	temp[m] = '\0'; 
+	outf << temp;
+	outf << '\n';
+	//printf("%s\n", temp);
 }
 
 void num_methon(int sudoku[9][9])
@@ -93,6 +110,7 @@ void num_methon(int sudoku[9][9])
 }
 int creat(int in_time)
 {
+	outf.open("sudo.txt");
 	int i = 0, number;
 	int sudoku[9][9] = { { 5, 4, 6, 3, 9, 2, 8, 7, 1 },
 	{ 3, 2, 8, 5, 7, 1, 9, 4, 6 },
@@ -128,12 +146,12 @@ int creat(int in_time)
 		save_memory(sudoku,n);
 		n++;
 	}
-	outf.open("sudo.txt");
-	for ( i = 0; i < n; i++)
-	{
-		save(sudo_re[i]);
-	}
 	
+	//for ( i = 0; i < n; i++)
+	//{
+	//	save(sudo_re[i]);
+	//}
+	//
 	endTime = clock();
 	cout << "Totle Time : " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
 	return 0;
