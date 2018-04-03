@@ -5,6 +5,7 @@
 #include <math.h>
 #include <time.h>
 using namespace std;
+int sudo_re[1000005][9][9];
 typedef struct node
 {
 	int col;
@@ -12,6 +13,28 @@ typedef struct node
 	int value[10];
 } Node;
 ofstream outf;
+void save_q(int num)
+{
+	ofstream outfile;
+	outfile.open("sudo.txt");
+	for (int i = 0; i<num; i++) 
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			for (int m = 0; m < 8; m++)
+			{
+				outfile << sudo_re[i][j][m] ;
+				outfile <<" ";
+			} 
+			outfile << sudo_re[i][j][8];
+			outfile << '\n';
+		}
+		if(num-1!=i)
+		outfile << '\n';
+	}
+	
+	outfile.close();
+}
 void save(int a[9][9])
 {
 	char space = 32;
@@ -30,6 +53,17 @@ void save(int a[9][9])
 	outf << '\n';
 
 }
+void save_memory(int a[9][9], int tim)
+{
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			sudo_re[tim][i][j] = a[i][j];
+		}
+	}
+}
+
 void num_methon(int sudoku[9][9])
 {
 	int i, j, number = 0, number2 = 0, temp1, temp2, temp3;
@@ -59,7 +93,6 @@ void num_methon(int sudoku[9][9])
 }
 int creat(int in_time)
 {
-	outf.open("suduku.txt");
 	int i = 0, number;
 	int sudoku[9][9] = { { 5, 4, 6, 3, 9, 2, 8, 7, 1 },
 	{ 3, 2, 8, 5, 7, 1, 9, 4, 6 },
@@ -74,6 +107,7 @@ int creat(int in_time)
 								 //scanf_s("%d", &in_time);
 	clock_t startTime, endTime;
 	startTime = clock();
+	int n=0;
 	while (in_time--)
 	{
 		i = 0;
@@ -91,9 +125,15 @@ int creat(int in_time)
 			i++;
 		}
 		//print_sudoku(sudoku);
-		save(sudoku);
+		save_memory(sudoku,n);
+		n++;
 	}
-	outf.close();
+	outf.open("sudo.txt");
+	for ( i = 0; i < n; i++)
+	{
+		save(sudo_re[i]);
+	}
+	
 	endTime = clock();
 	cout << "Totle Time : " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
 	return 0;
